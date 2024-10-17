@@ -38,11 +38,13 @@ impl Render {
     /// Desenha um polígono na tela.
     pub fn draw_polygon(&mut self, polygon: &Polygon) {
         self.fillpoly(polygon);
-        self.draw_edges(polygon);
+        if polygon.outlined {
+            self.outlined(polygon);
+        }
     }
 
     /// Desenha as arestas dos polígonos.
-    pub fn draw_edges(&mut self, polygon: &Polygon) {
+    pub fn outlined(&mut self, polygon: &Polygon) {
         let mut counter = 0;
         while counter < polygon.vertices.len() - 1 {
             let (
@@ -62,7 +64,7 @@ impl Render {
     fn fillpoly(
         &mut self,
         polygon: &Polygon,
-    ) { 
+    ) {
         for (i, intersections) in &polygon.intersections {
             let mut counter = 0;
 
@@ -70,12 +72,20 @@ impl Render {
                 let x_initial = intersections[counter].ceil() as usize;
                 let x_final = intersections[counter + 1].floor() as usize;
 
+                /*
+                if x_initial > x_final {
+                    self.paint(*i, x_initial, polygon.fill_color);
+                }
+                */
+
                 for j in x_initial..=x_final {
                     self.paint(*i, j, polygon.fill_color);
                 }
 
                 counter += 2;
             }
+
+            print!("\n");
         }
     }
 

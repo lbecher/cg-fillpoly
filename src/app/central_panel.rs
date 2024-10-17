@@ -39,17 +39,20 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
                 if let Some(position_on_window) = response.hover_pos() {
                     let painter_origin = painter.clip_rect().min;
                     let position_on_painter = position_on_window - painter_origin;
-                    app.add_vertex_to_current_drawing_polygon(position_on_painter.x, position_on_painter.y);
+                    let x = position_on_painter.x;
+                    let y = position_on_painter.y;
+                    app.add_vertex_to_current_drawing_polygon(x, y);
                 }
             }
             Mode::Select => {
                 if let Some(position_on_window) = response.hover_pos() {
-                    let x = position_on_window.x;
-                    let y = position_on_window.y;
+                    let painter_origin = painter.clip_rect().min;
+                    let position_on_painter = position_on_window - painter_origin;
+                    let x = position_on_painter.x.trunc();
+                    let y = position_on_painter.y.trunc();
                     app.polygons.iter().enumerate().for_each(|(i, polygon)| {
                         if polygon.is_inside(x, y) {
                             app.selected_polygon = Some(i);
-                            println!("Selected polygon: {}", i);
                         }
                     });
                 }

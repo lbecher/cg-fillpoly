@@ -25,6 +25,7 @@ pub struct App {
     current_fill_color: [u8; 3],
     current_outline_color: [u8; 3],
     current_drawing_polygon: Vec<Pos2>,
+    paint_edges: bool,
 
     polygons: Vec<Polygon>,
     selected_polygon: Option<usize>,
@@ -39,9 +40,10 @@ impl Default for App {
             mode: Mode::Draw,
             duration: Duration::default(),
 
-            current_fill_color: [0, 100, 200],
-            current_outline_color: [255, 255, 255],
+            current_fill_color: [255, 255, 255],
+            current_outline_color: [255, 255, 00],
             current_drawing_polygon: Vec::new(),
+            paint_edges: true,
 
             polygons: Vec::new(),
             selected_polygon: None,
@@ -135,6 +137,7 @@ impl App {
             vertices,
             self.current_fill_color, 
             self.current_outline_color,
+            self.paint_edges,
         );
         polygon.calculate_intersections();
 

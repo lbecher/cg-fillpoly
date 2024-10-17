@@ -1,11 +1,13 @@
 use eframe::egui::Pos2;
 use std::collections::HashMap;
+use ordered_float::OrderedFloat;
 
 pub struct Polygon {
     pub vertices: Vec<Pos2>,
     pub fill_color: [u8; 3],
     pub outline_color: [u8; 3],
-    pub intersections: HashMap<usize, Vec<f32>>,
+    pub outlined: bool,
+    pub intersections: HashMap<usize, Vec<OrderedFloat<f32>>>,
 }
 
 impl Polygon {
@@ -13,6 +15,7 @@ impl Polygon {
         vertices: Vec<Pos2>,
         fill_color: [u8; 3],
         outline_color: [u8; 3],
+        outlined: bool,
     ) -> Self {
         let intersections = HashMap::new();
         Self {
@@ -20,6 +23,7 @@ impl Polygon {
             fill_color,
             outline_color,
             intersections,
+            outlined,
         }
     }
 
@@ -27,9 +31,9 @@ impl Polygon {
     pub fn calculate_intersections(&mut self) {
         let mut counter = 0;
         while counter < self.vertices.len() - 1 {
-            let mut x0 = self.vertices[counter].x.round();
+            let mut x0 = self.vertices[counter].x;
             let mut y0 = self.vertices[counter].y.round();
-            let mut x1 = self.vertices[counter + 1].x.round();
+            let mut x1 = self.vertices[counter + 1].x;
             let mut y1 = self.vertices[counter + 1].y.round();
 
             if y0 > y1 {
@@ -47,14 +51,14 @@ impl Polygon {
             let tx = dx / dy;
 
             let mut x = x0;
-            let mut y = y0.round() as usize;
+            let mut y = y0 as usize;
 
             while y < y1 as usize {
                 let intersections = self.intersections
                     .entry(y)
                     .or_insert(Vec::new());
 
-                intersections.push(x);
+                intersections.push(x.into());
 
                 x += tx;
                 y += 1;
@@ -64,7 +68,7 @@ impl Polygon {
         }
 
         for (_, intersections) in &mut self.intersections {
-            intersections.sort_by(|a, b| a.partial_cmp(b).unwrap());
+            intersections.sort();
         }
     }
 

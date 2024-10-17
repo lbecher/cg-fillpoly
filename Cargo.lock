@@ -591,6 +591,7 @@ name = "cg-fillpoly"
 version = "0.1.0"
 dependencies = [
  "eframe",
+ "ordered-float",
 ]
 
 [[package]]
@@ -1935,6 +1936,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52f0d54bde9774d3a51dcf281a5def240c71996bc6ca05d2c847ec8b2b216166"
 dependencies = [
  "libredox",
+]
+
+[[package]]
+name = "ordered-float"
+version = "4.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83e7ccb95e240b7c9506a3d544f10d935e142cc90b0a1d56954fb44d89ad6b97"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]

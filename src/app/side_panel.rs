@@ -29,14 +29,31 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
 
             ui.label("Contorno:");
             if ui.color_edit_button_srgb(&mut app.current_outline_color).changed() {
-                if app.mode == Mode::Draw {
+                if let Some(index) = app.selected_polygon.clone() {
+                    let outline_color = app.current_outline_color;
+                    app.polygons[index].outline_color = outline_color;
                     app.redraw();
                 }
             };
             ui.end_row();
 
+            ui.label("Pintar arestas?");
+            ui.checkbox(&mut app.paint_edges, "");
+            ui.end_row();
+
             ui.label("Tempo:");
             ui.label(format!("{} ms", app.duration.as_millis()));
             ui.end_row();
+
+            ui.label("Opções:");
+            ui.vertical(|ui| {
+                if ui.button("Apagar").clicked() {
+                    if let Some(index) = app.selected_polygon {
+                        app.polygons.remove(index);
+                        app.selected_polygon = None;
+                        app.redraw();
+                    }
+                };
+            });
         });
 }
