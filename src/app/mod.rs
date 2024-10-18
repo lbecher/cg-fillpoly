@@ -25,7 +25,7 @@ pub struct App {
     current_fill_color: [u8; 3],
     current_outline_color: [u8; 3],
     current_drawing_polygon: Vec<Pos2>,
-    paint_edges: bool,
+    outlined: bool,
 
     polygons: Vec<Polygon>,
     selected_polygon: Option<usize>,
@@ -43,7 +43,7 @@ impl Default for App {
             current_fill_color: [255, 255, 255],
             current_outline_color: [255, 255, 00],
             current_drawing_polygon: Vec::new(),
-            paint_edges: true,
+            outlined: true,
 
             polygons: Vec::new(),
             selected_polygon: None,
@@ -137,7 +137,7 @@ impl App {
             vertices,
             self.current_fill_color, 
             self.current_outline_color,
-            self.paint_edges,
+            self.outlined,
         );
         polygon.calculate_intersections();
 
@@ -146,7 +146,11 @@ impl App {
         self.redraw();
     }
 
-    pub fn select_polygon(&mut self, click: &Pos2) {
+    pub fn select_polygon(
+        &mut self,
+        x: f32,
+        y: f32,
+    ) {
         let len = self.polygons.len();
         if len == 0 {
             return;
@@ -154,7 +158,7 @@ impl App {
 
         let mut index = len - 1;
         loop {
-            if self.polygons[index].is_inside(click.x, click.y) {
+            if self.polygons[index].ray_casting(x, y) {
                 self.selected_polygon = Some(index);
                 self.redraw();
                 break;
@@ -179,5 +183,18 @@ impl App {
     pub fn clear_current_drawing_polygon(&mut self) {
         self.current_drawing_polygon.clear();
         self.redraw();
+    }
+
+    pub fn clear_all(&mut self) {
+        self.current_drawing_polygon.clear();
+        self.polygons.clear();
+        self.redraw();
+    }
+
+    pub fn set_selected_outlined(&mut self, value: bool) {
+        if let Some(index) = self.selected_polygon {
+            self.polygons[index].outlined = value;
+            self.redraw();
+        }
     }
 }

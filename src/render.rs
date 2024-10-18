@@ -72,20 +72,12 @@ impl Render {
                 let x_initial = intersections[counter].ceil() as usize;
                 let x_final = intersections[counter + 1].floor() as usize;
 
-                /*
-                if x_initial > x_final {
-                    self.paint(*i, x_initial, polygon.fill_color);
-                }
-                */
-
                 for j in x_initial..=x_final {
                     self.paint(*i, j, polygon.fill_color);
                 }
 
                 counter += 2;
             }
-
-            print!("\n");
         }
     }
 

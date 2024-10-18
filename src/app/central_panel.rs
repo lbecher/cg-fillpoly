@@ -50,11 +50,7 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
                     let position_on_painter = position_on_window - painter_origin;
                     let x = position_on_painter.x.trunc();
                     let y = position_on_painter.y.trunc();
-                    app.polygons.iter().enumerate().for_each(|(i, polygon)| {
-                        if polygon.is_inside(x, y) {
-                            app.selected_polygon = Some(i);
-                        }
-                    });
+                    app.select_polygon(x, y);
                 }
             }
         }

@@ -73,7 +73,7 @@ impl Polygon {
     }
 
     /// Verifica se a coordenada (x, y) está dentro do polígono.
-    pub fn is_inside(
+    /*pub fn is_inside(
         &self,
         x: f32,
         y: f32,
@@ -95,5 +95,28 @@ impl Polygon {
         }
 
         false
+    }*/
+
+    /// Verifica se a coordenada (x, y) está dentro do polígono.
+    pub fn ray_casting(
+        &self,
+        x: f32,
+        y: f32,
+    ) -> bool {
+        let len = self.vertices.len();
+        let mut crossings: usize = 0;
+
+        for i in 1..len {
+            let x0 = self.vertices[i - 1].x;
+            let y0 = self.vertices[i - 1].y;
+            let x1 = self.vertices[i].x;
+            let y1 = self.vertices[i].y;
+
+            if y0 <= y && y < y1 && (x - x0) * (y1 - y0) < (x1 - x0) * (y - y0) {
+                crossings += 1
+            } 
+        }
+
+        crossings % 2 == 1
     }
 }

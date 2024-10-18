@@ -38,22 +38,27 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
             ui.end_row();
 
             ui.label("Pintar arestas?");
-            ui.checkbox(&mut app.paint_edges, "");
+            if ui.checkbox(&mut app.outlined, "").changed() {
+                app.set_selected_outlined(app.outlined);
+            }
             ui.end_row();
 
             ui.label("Tempo:");
             ui.label(format!("{} ms", app.duration.as_millis()));
             ui.end_row();
 
-            ui.label("Opções:");
+            ui.label("Apagar:");
             ui.vertical(|ui| {
-                if ui.button("Apagar").clicked() {
-                    if let Some(index) = app.selected_polygon {
-                        app.polygons.remove(index);
-                        app.selected_polygon = None;
-                        app.redraw();
-                    }
-                };
+                if ui.button("Desenho atual").clicked() {
+                    app.clear_current_drawing_polygon();
+                }
+                if ui.button("Polígono selecionado").clicked() {
+                    app.delete_selected_polygon();
+                }
+                if ui.button("Tudo").clicked() {
+                    app.clear_all();
+                }
+                
             });
         });
 }
