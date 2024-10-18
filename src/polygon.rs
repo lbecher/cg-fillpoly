@@ -1,5 +1,5 @@
 use eframe::egui::Pos2;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use ordered_float::OrderedFloat;
 
 pub struct Polygon {
@@ -7,7 +7,7 @@ pub struct Polygon {
     pub fill_color: [u8; 3],
     pub outline_color: [u8; 3],
     pub outlined: bool,
-    pub intersections: HashMap<usize, Vec<OrderedFloat<f32>>>,
+    pub intersections: BTreeMap<usize, Vec<OrderedFloat<f32>>>,
 }
 
 impl Polygon {
@@ -17,7 +17,7 @@ impl Polygon {
         outline_color: [u8; 3],
         outlined: bool,
     ) -> Self {
-        let intersections = HashMap::new();
+        let intersections = BTreeMap::new();
         Self {
             vertices,
             fill_color,

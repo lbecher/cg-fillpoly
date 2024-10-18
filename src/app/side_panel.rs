@@ -49,10 +49,10 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
 
             ui.label("Apagar:");
             ui.vertical(|ui| {
-                if ui.button("Desenho atual").clicked() {
+                if ui.button("Desenho").clicked() {
                     app.clear_current_drawing_polygon();
                 }
-                if ui.button("Polígono selecionado").clicked() {
+                if ui.button("Polígono").clicked() {
                     app.delete_selected_polygon();
                 }
                 if ui.button("Tudo").clicked() {

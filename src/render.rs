@@ -67,7 +67,7 @@ impl Render {
     ) {
         for (i, intersections) in &polygon.intersections {
             let mut counter = 0;
-
+            
             while counter < intersections.len() {
                 let x_initial = intersections[counter].ceil() as usize;
                 let x_final = intersections[counter + 1].floor() as usize;
