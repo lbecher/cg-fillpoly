@@ -168,7 +168,7 @@ impl App {
                 self.outlined = self.polygons[index].outlined;
 
                 self.redraw();
-                
+
                 break;
             }
 
@@ -196,6 +196,7 @@ impl App {
     pub fn clear_all(&mut self) {
         self.current_drawing_polygon.clear();
         self.polygons.clear();
+        self.selected_polygon = None;
         self.redraw();
     }
 

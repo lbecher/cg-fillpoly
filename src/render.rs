@@ -135,6 +135,11 @@ impl Render {
         color: [u8; 3],
     ) {
         let index = ((i * self.width) + j) * 4;
+
+        if self.buffer.len() <= index {
+            return;
+        }
+
         self.buffer[index]     = color[0];
         self.buffer[index + 1] = color[1];
         self.buffer[index + 2] = color[2];
