@@ -21,8 +21,8 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
     ) = ui.allocate_painter(desired_size, sense);
 
     if app.render.is_none() {
-        let x = x as usize;
-        let y = y as usize;
+        let x = x.floor() as usize;
+        let y = y.floor() as usize;
         let render = Render::new(x, y);
         app.render = Some(render);
         app.redraw();
@@ -91,6 +91,9 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
         );
 
         let mut redraw = false;
+
+        let width = app.get_width();
+        let height = app.get_height();
     
         let control_point_radius = 8.0;
         let control_point_shapes: Vec<Shape> = app.current_drawing_polygon
@@ -109,6 +112,14 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
                 }
 
                 *point += point_response.drag_delta();
+
+                if point.x > width - 1.0 {
+                    point.x = width - 1.0;
+                }
+                if point.y > height - 1.0 {
+                    point.y = height - 1.0;
+                }
+
                 *point = to_screen.from().clamp(*point);
 
                 let point_in_screen = to_screen.transform_pos(*point);

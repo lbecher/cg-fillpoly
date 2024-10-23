@@ -7,7 +7,7 @@ use eframe::egui::{CentralPanel, ColorImage, Context, Pos2, SidePanel};
 use central_panel::central_panel;
 use side_panel::side_panel;
 use std::time::{Duration, Instant};
-use crate::constants::SIDE_PANEL_WIDTH;
+use crate::constants::{self, SIDE_PANEL_WIDTH};
 use crate::polygon::Polygon;
 use crate::render::Render;
 use crate::utils::pos_to_coords;
@@ -123,7 +123,17 @@ impl App {
         }
     }
 
-    pub fn add_vertex_to_current_drawing_polygon(&mut self, x: f32, y: f32) {
+    pub fn add_vertex_to_current_drawing_polygon(&mut self, mut x: f32, mut y: f32) {
+        let width = self.get_width();
+        let height = self.get_height();
+
+        if x > width - 1.0 {
+            x = width - 1.0;
+        }
+        if y > height - 1.0 {
+            y = height - 1.0;
+        }
+        
         let new_vertex = Pos2::new(x, y);
         self.current_drawing_polygon.push(new_vertex);
         self.redraw();
@@ -204,6 +214,22 @@ impl App {
         if let Some(index) = self.selected_polygon {
             self.polygons[index].outlined = value;
             self.redraw();
+        }
+    }
+
+    pub fn get_width(&mut self) -> f32 {
+        if self.render.is_some() {
+            self.render.as_mut().unwrap().get_width() as f32
+        } else {
+            constants::DEFAULT_WIDTH as f32
+        }
+    }
+
+    pub fn get_height(&mut self) -> f32 {
+        if self.render.is_some() {
+            self.render.as_mut().unwrap().get_height() as f32
+        } else {
+            constants::DEFAULT_HEIGHT as f32
         }
     }
 }
