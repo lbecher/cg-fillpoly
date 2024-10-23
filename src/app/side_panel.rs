@@ -7,7 +7,7 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
             app.selected_polygon = None;
         };
         if ui.radio_value(&mut app.mode, Mode::Select, "Selecionar"). clicked() {
-            app.delete_selected_polygon();
+            app.clear_current_drawing_polygon();
         };
     });
     
@@ -49,10 +49,10 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
 
             ui.label("Apagar:");
             ui.vertical(|ui| {
-                if ui.button("Desenho").clicked() {
+                if ui.button("Desenho atual").clicked() {
                     app.clear_current_drawing_polygon();
                 }
-                if ui.button("Polígono").clicked() {
+                if ui.button("Polígono sel.").clicked() {
                     app.delete_selected_polygon();
                 }
                 if ui.button("Tudo").clicked() {
