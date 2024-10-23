@@ -5,11 +5,9 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
     ui.vertical(|ui| {
         if ui.radio_value(&mut app.mode, Mode::Draw, "Desenhar").clicked() {
             app.selected_polygon = None;
-            app.redraw();
         };
         if ui.radio_value(&mut app.mode, Mode::Select, "Selecionar"). clicked() {
-            app.current_drawing_polygon.clear();
-            app.redraw();
+            app.delete_selected_polygon();
         };
     });
     
@@ -32,6 +30,8 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
                 if let Some(index) = app.selected_polygon.clone() {
                     let outline_color = app.current_outline_color;
                     app.polygons[index].outline_color = outline_color;
+                    app.redraw();
+                } else if app.current_drawing_polygon.len() > 1 {
                     app.redraw();
                 }
             };

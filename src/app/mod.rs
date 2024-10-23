@@ -156,9 +156,11 @@ impl App {
             return;
         }
 
+        self.selected_polygon = None;
+
         let mut index = len - 1;
         loop {
-            if self.polygons[index].ray_casting(x, y) {
+            if self.polygons[index].is_inside(x, y) {
                 self.selected_polygon = Some(index);
                 self.redraw();
                 break;

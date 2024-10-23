@@ -123,5 +123,25 @@ pub fn central_panel(app: &mut App, ui: &mut Ui) {
         }
     
         painter.extend(control_point_shapes);
+    } else {
+        if let Some(index) = app.selected_polygon.clone() {
+            let to_screen = RectTransform::from_to(
+                Rect::from_min_size(Pos2::ZERO, response.rect.size()),
+                response.rect,
+            );
+
+            let control_point_radius = 8.0;
+            let control_point_shapes: Vec<Shape> = app.polygons[index].vertices
+                .iter_mut()
+                .enumerate()
+                .map(|(_, point)| {
+                    let point_in_screen = to_screen.transform_pos(*point);
+                    let control_points_stroke = Stroke::new(2.0, ui.ctx().style().visuals.text_color());
+                    Shape::circle_stroke(point_in_screen, control_point_radius, control_points_stroke)
+                })
+                .collect();
+        
+            painter.extend(control_point_shapes);
+        }
     }
 }

@@ -29,6 +29,8 @@ impl Polygon {
 
     /// Calcula as interseções do polígono com as linhas horizontais.
     pub fn calculate_intersections(&mut self) {
+        self.intersections = BTreeMap::new();
+        
         let mut counter = 0;
         while counter < self.vertices.len() - 1 {
             let mut x0 = self.vertices[counter].x;
@@ -73,7 +75,7 @@ impl Polygon {
     }
 
     /// Verifica se a coordenada (x, y) está dentro do polígono.
-    /*pub fn is_inside(
+    pub fn is_inside(
         &self,
         x: f32,
         y: f32,
@@ -95,9 +97,9 @@ impl Polygon {
         }
 
         false
-    }*/
+    }
 
-    /// Verifica se a coordenada (x, y) está dentro do polígono.
+    /*/// Verifica se a coordenada (x, y) está dentro do polígono.
     pub fn ray_casting(
         &self,
         x: f32,
@@ -118,5 +120,5 @@ impl Polygon {
         }
 
         crossings % 2 == 1
-    }
+    }*/
 }
