@@ -162,7 +162,13 @@ impl App {
         loop {
             if self.polygons[index].is_inside(x, y) {
                 self.selected_polygon = Some(index);
+
+                self.current_fill_color = self.polygons[index].fill_color;
+                self.current_outline_color = self.polygons[index].outline_color;
+                self.outlined = self.polygons[index].outlined;
+
                 self.redraw();
+                
                 break;
             }
 

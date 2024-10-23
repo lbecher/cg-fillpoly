@@ -25,7 +25,7 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
             };
             ui.end_row();
 
-            ui.label("Contorno:");
+            /*ui.label("Contorno:");
             if ui.color_edit_button_srgb(&mut app.current_outline_color).changed() {
                 if let Some(index) = app.selected_polygon.clone() {
                     let outline_color = app.current_outline_color;
@@ -35,7 +35,7 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
                     app.redraw();
                 }
             };
-            ui.end_row();
+            ui.end_row();*/
 
             ui.label("Pintar arestas?");
             if ui.checkbox(&mut app.outlined, "").changed() {
@@ -43,7 +43,7 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
             }
             ui.end_row();
 
-            ui.label("Tempo:");
+            ui.label("Renderização:");
             ui.label(format!("{} ms", app.duration.as_millis()));
             ui.end_row();
 
