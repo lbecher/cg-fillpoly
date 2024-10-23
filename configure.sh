@@ -1,7 +1,8 @@
 #!/bin/bash
 
 sudo dnf install \
-    curl binutils \
+    curl \
+    binutils gcc \
     mingw32-binutils mingw32-gcc \
     mingw64-binutils mingw64-gcc \
     ucrt64-binutils
