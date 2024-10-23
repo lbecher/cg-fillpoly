@@ -52,7 +52,7 @@ pub fn side_panel(app: &mut App, ui: &mut Ui) {
                 if ui.button("Desenho atual").clicked() {
                     app.clear_current_drawing_polygon();
                 }
-                if ui.button("Polígono sel.").clicked() {
+                if ui.button("Polígono selecionado").clicked() {
                     app.delete_selected_polygon();
                 }
                 if ui.button("Tudo").clicked() {
